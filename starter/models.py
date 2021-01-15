@@ -1,8 +1,11 @@
-from sqlalchemy import Column, String, create_engine
+import os
+from sqlalchemy import Column, String, Integer, create_engine
 from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 import json
 
-database_path = os.environ['DATABASE_URL']
+#database_path = os.environ['DATABASE_URL']
+database_path = 'postgres://qzqnhqbzjsecpn:1c1f3440173dd620daa65e79e88fbc1984eb318c291e9087cfdd77ac987946a0@ec2-34-202-5-87.compute-1.amazonaws.com:5432/d191ndhlio2ti'
 
 db = SQLAlchemy()
 
@@ -25,7 +28,7 @@ Have title and release year
 class Person(db.Model):  
   __tablename__ = 'People'
 
-  id = Column(Integer, primary_key=True)
+  id = Column(Integer().with_variant(Integer,"sqlite"), primary_key=True)
   name = Column(String)
   catchphrase = Column(String)
 
